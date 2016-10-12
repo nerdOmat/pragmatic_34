@@ -77,7 +77,7 @@ theme.titlebar_maximized_button_focus_active  = "/home/usappz/.config/awesome/th
 
 -- You can use your own command to set your wallpaper
 --theme.wallpaper_cmd = { "awsetbg /home/usappz/.config/awesome/themes/ticktronaut/background.png" }
-theme.wallpaper_cmd = { "awsetbg /home/usappz/.config/awesome/themes/ticktronaut/wallpapers/earth.jpg" }
+theme.wallpaper_cmd = { "awsetbg /home/usappz/.config/awesome/themes/ticktronaut/wallpapers/iss.jpg" }
 -- wallpaper from https://github.com/romockee/powerarrow
 --theme.wallpaper_cmd = { "awsetbg /home/usappz/.config/awesome/themes/ticktronaut/wallpapers/powerarrow.jpg" }
 
