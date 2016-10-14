@@ -9,6 +9,8 @@ require("naughty")
 
 -- Load Debian menu entries
 require("debian.menu")
+-- widget libraries
+require("vicious")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -56,7 +58,6 @@ modkey = "Mod4"
 layouts =
 {
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
@@ -67,6 +68,7 @@ layouts =
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
+    awful.layout.suit.floating,
 }
 -- }}}
 
@@ -107,6 +109,18 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
+-- CPU usage 
+cpuwidget = widget({ type = "textbox" })
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1%", 13) -- first value all cpus, second cpu1, third cpu2
+--cpuicon = widget ({type = "imagebox" })
+--cpuicon.image = image(beautiful.widget_cpu)
+
+-- Memory usage
+memwidget = widget({ type = "textbox" })
+vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
+--memicon = widget ({type = "imagebox" })
+--memmicon.image = image(beautiful.widget_mem)
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
 
@@ -189,6 +203,10 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+	cpuwidget,
+--	memwidget,
+--	memvirtwidget,
+	datewidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -384,3 +402,5 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+-- os.execute("nm-applet &")
