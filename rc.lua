@@ -11,6 +11,8 @@ require("naughty")
 require("debian.menu")
 -- widget libraries
 require("vicious")
+-- view vicious readme:
+-- http://git.sysphere.org/vicious/tree/README
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -112,14 +114,21 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- CPU usage 
 cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1%", 13) -- first value all cpus, second cpu1, third cpu2
---cpuicon = widget ({type = "imagebox" })
---cpuicon.image = image(beautiful.widget_cpu)
+cpuicon = widget ({type = "imagebox" })
+cpuicon.image = image(beautiful.widget_cpu)
 
 -- Memory usage
 memwidget = widget({ type = "textbox" })
 vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
 --memicon = widget ({type = "imagebox" })
 --memmicon.image = image(beautiful.widget_mem)
+
+-- Battery widget
+--batwidget = widget({ type = "textbox" })
+--vicious.register( batwidget, vicious.wdgets.bat, 1, "BAT0" )
+--ster( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 1, "BAT0" )
+--baticon = widget ({type = "imagebox" })
+--baticon.image = image(beautiful.widget_battery)
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
@@ -204,7 +213,9 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
 	cpuwidget,
+	cpuicon,
 --	memwidget,
+--	memicon,
 --	memvirtwidget,
 	datewidget,
         s == 1 and mysystray or nil,
