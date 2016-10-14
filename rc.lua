@@ -23,6 +23,14 @@ if awesome.startup_errors then
                      text = awesome.startup_errors })
 end
 
+-- {{{ Theme path
+-- change paths to your needs ---------------------------
+config_path = (os.getenv("HOME") .. "/.config/awesome/")
+themes_path = (config_path .. "themes/")
+mytheme_path = (themes_path .. "ticktronaut")
+-- change paths to your needs ---------------------------
+--- }}}
+
 -- Handle runtime errors after startup
 do
     local in_error = false
