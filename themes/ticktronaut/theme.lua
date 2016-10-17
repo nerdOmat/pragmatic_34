@@ -3,11 +3,6 @@
 ---------------------------
 
 theme = {}
--- change paths to your needs ---------------------------
---config_path = (os.getenv("HOME") .. "/.config/awesome/")
---themes_path = (config_path .. "themes/")
---mytheme_path = (themes_path .. "ticktronaut")
--- change paths to your needs ---------------------------
 
 theme.font          = "sans 8"
 

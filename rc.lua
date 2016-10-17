@@ -24,11 +24,11 @@ if awesome.startup_errors then
 end
 
 -- {{{ Theme path
--- change paths to your needs ---------------------------
+-- change global path-variables to your needs ---------------------------
 config_path = (os.getenv("HOME") .. "/.config/awesome/")
 themes_path = (config_path .. "themes/")
 mytheme_path = (themes_path .. "ticktronaut")
--- change paths to your needs ---------------------------
+-- change global path-variables to your needs ---------------------------
 --- }}}
 
 -- Handle runtime errors after startup
