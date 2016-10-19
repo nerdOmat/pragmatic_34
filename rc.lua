@@ -13,6 +13,12 @@ require("debian.menu")
 require("vicious")
 -- view vicious readme:
 -- http://git.sysphere.org/vicious/tree/README
+--require("lain")
+-- view lain documentation:
+-- github.com/copycat-killer/lain/wiki
+--require("couth.alsa")
+-- view couth github page:
+-- https://github.com/golowski/couth
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -82,6 +88,8 @@ layouts =
 }
 -- }}}
 
+--couth.CONFIG.ALSA_CONTROLS = { 'Master', 'PCM' }
+
 -- {{{ Wallpaper
 --if beautiful.wallpaper then
 --    for s = 1, screen.count() do
@@ -119,24 +127,54 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- }}}
 
 -- {{{ Wibox
+-- volume 
+
 -- CPU usage 
 cpuwidget = widget({ type = "textbox" })
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1%", 13) -- first value all cpus, second cpu1, third cpu2
-cpuicon = widget ({type = "imagebox" })
+cpuicon = widget ({ type = "imagebox" })
 cpuicon.image = image(beautiful.widget_cpu)
+
+-- Temperature
+tempwidget = widget({type = "textbox" })
+vicious.register(tempwidget, vicious.widgets.thermal, "$1°C", 13, { "coretemp.0", "core"})
+tempicon = widget ({ type = "imagebox" })
+tempicon.image = image(beautiful.widget_temp)
+
+-- sensors = widget({ type = "textbox" })
+-- vicious.register(sensors, vicious.widgets.sensors)
+-- tempicon = widget({ type = "imagebox"})
+-- tempicon.image = image(beautiful.widget_temp)
 
 -- Memory usage
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, "$1% ($2MB/$3MB)", 13)
---memicon = widget ({type = "imagebox" })
---memmicon.image = image(beautiful.widget_mem)
+vicious.register(memwidget, vicious.widgets.mem, "$1%", 13) --($2MB/$3MB)", 13)
+memicon = widget ({ type = "imagebox" })
+memicon.image = image(beautiful.widget_mem)
 
 -- Battery widget
---batwidget = widget({ type = "textbox" })
---vicious.register( batwidget, vicious.wdgets.bat, 1, "BAT0" )
+batwidget = widget({ type = "textbox" })
+vicious.register(batwidget, vicious.widgets.bat, "$1$2%", 30, "BAT0")
+--vicious.register(batwidget, vicious.widgets.bat, $2%, 61, "BAT0" ) -- $1 state, §2 charge level in percent, 3$ remaining (charching or discharging), $4 wear level in percent
 --ster( batwidget, vicious.widgets.bat, '<span background="#92B0A0" font="Terminus 12"> <span font="Terminus 9" color="#FFFFFF" background="#92B0A0">$1$2% </span></span>', 1, "BAT0" )
---baticon = widget ({type = "imagebox" })
---baticon.image = image(beautiful.widget_battery)
+baticon = widget ({type = "imagebox" })
+baticon.image = image(beautiful.widget_bat)
+--baticon.image = image(beautiful.baticon)
+
+-- ALSA volume
+volwidget = widget({ type = "textbox" })
+vicious.register(volwidget, vicious.widgets.volume, "$1%$2", 0.5, "Master")
+volicon = widget ({ type = "imagebox" })
+volicon.image = image(beautiful.widget_volume)
+--volumewidget = lain.widgets.alsa({
+--	settings = function ()
+--		widget:set_text(" " .. volume_now.level .. "% ")
+--	end
+--})
+
+-- Border
+bordericon = widget ({type = "imagebox" })
+bordericon.image = image(beautiful.widget_border)
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })
@@ -220,11 +258,22 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+	bordericon,
+	tempwidget,
+	tempicon,
+	bordericon,
 	cpuwidget,
 	cpuicon,
---	memwidget,
---	memicon,
---	memvirtwidget,
+	bordericon,
+	memwidget,
+	memicon,
+	bordericon,
+	batwidget,
+	baticon,
+	bordericon,
+	volwidget,
+	volicon,
+	bordericon,
 	datewidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
@@ -286,6 +335,12 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
+
+-- own keybindings
+awful.key({ },"XF86AudioLowerVolume",         function () awful.util.spawn("amixer set Master 9%-") end),
+awful.key({ },"XF86AudioRaiseVolume",         function () awful.util.spawn("amixer set Master 9%+") end),
+awful.key({ },"XF86AudioMute",                function () awful.util.spawn("amixer sset Master toggle") end),
+-- own keybindings
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
@@ -422,4 +477,5 @@ client.add_signal("focus", function(c) c.border_color = beautiful.border_focus e
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- os.execute("nm-applet &")
+-- todo: if not running statement
+os.execute("nm-applet &")

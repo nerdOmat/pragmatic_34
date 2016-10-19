@@ -5,6 +5,10 @@
 theme = {}
 
 theme.font          = "sans 8"
+--themefont          = "DejaVu Sans Mono 8"
+--theme.font          = "Tamsyn 10"
+--theme.taglist_font    = "Tamsyn 8"
+--theme.font          = "terminus 8"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
@@ -96,8 +100,14 @@ theme.layout_dwindle = mytheme_path .. "/layouts/dwindlew.png"
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 
 -- todo: notification powerarrow icons and entypo icons
--- todo: change powerarrow cpu icon to own
 theme.widget_cpu = mytheme_path .. "/icons/cpu.png"
+--theme.widget_bat = mytheme_path .. "/icons/battery.png"
+theme.widget_bat = mytheme_path .. "/icons/flash.png"
+theme.widget_mem = mytheme_path .. "/icons/memory.png"
+theme.widget_temp = mytheme_path .. "/icons/thermometer.png"
+--theme.widget_dot = mytheme_path .. "/icons/dot-single.png"
+theme.widget_border = mytheme_path .. "/icons/border.png"
+theme.widget_volume = mytheme_path .. "/icons/controller-volume.png"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
